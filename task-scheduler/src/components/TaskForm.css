@@ -1,0 +1,51 @@
+.task-form-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .task-form {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    width: 300px;
+    text-align: left;
+  }
+  
+  .task-form h2 {
+    margin-bottom: 10px;
+  }
+  
+  .task-form form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .task-form label {
+    font-weight: bold;
+    margin-top: 10px;
+  }
+  
+  .task-form input,
+  .task-form select {
+    padding: 8px;
+    margin-top: 5px;
+  }
+  
+  .task-form button {
+    margin-top: 10px;
+    padding: 10px;
+    cursor: pointer;
+  }
+  
+  .close-btn {
+    background: red;
+    color: white;
+  }
+  

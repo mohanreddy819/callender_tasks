@@ -1,0 +1,5 @@
+npm install react
+npm install axios
+npm install socket.io-client
+npm install react-toastify
+npm install @fullcalendar/react @fullcalendar/daygrid @fullcalendar/interaction
