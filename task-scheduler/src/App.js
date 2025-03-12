@@ -202,6 +202,9 @@ const generateRecurringEvents = () => {
       <div className="legend-item">
         <span className="color-box none"></span> One-Time Task
       </div>
+      <div className="legend-item">
+        <b> Click Task to Edit</b>
+      </div>
     </div>
       {(selectedDate || selectedTask) && (
         <TaskForm
