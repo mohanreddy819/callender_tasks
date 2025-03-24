@@ -68,7 +68,7 @@ const TaskForm = ({ selectedTask, selectedDate, onClose }) => {
       alert("Error marking task as completed");
     }
   };
-
+// return function
   return (
     <div className="task-form-overlay">
       <div className="task-form">
