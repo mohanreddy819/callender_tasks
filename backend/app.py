@@ -7,16 +7,16 @@ from datetime import datetime
 
 app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "http://localhost:3000"}})
-socketio = SocketIO(app, cors_allowed_origins="*")  # WebSocket communication
+socketio = SocketIO(app, cors_allowed_origins="*")  
 scheduler = APScheduler()
 scheduler.init_app(app)
 scheduler.start()
 
-# Database Connection Function (Avoids "Database Locked" Errors)
+
 def get_db_connection():
     return sqlite3.connect("tasks.db", timeout=10, check_same_thread=False)
 
-# Initialize the SQLite database
+
 def init_db():
     conn = get_db_connection()
     c = conn.cursor()
@@ -35,7 +35,7 @@ def init_db():
 
 init_db()
 
-# Function to send notifications via WebSocket
+
 def send_notification(task_id):
     conn = get_db_connection()
     c = conn.cursor()
@@ -46,7 +46,7 @@ def send_notification(task_id):
     if task:
         socketio.start_background_task(lambda: socketio.emit("task_reminder", {"title": task[0], "time": task[1]}))
 
-# Fetch all tasks
+
 @app.route("/tasks", methods=["GET"])
 def get_tasks():
     conn = get_db_connection()
@@ -56,7 +56,7 @@ def get_tasks():
     conn.close()
     return jsonify(tasks)
 
-# Add a new task
+
 @app.route("/tasks", methods=["POST"])
 def add_task():
     data = request.json
@@ -67,7 +67,7 @@ def add_task():
     conn.commit()
     conn.close()
 
-    # Schedule notification only if it doesn't exist
+    
     job_id = str(task_id)
     if not scheduler.get_job(job_id):
         task_time = datetime.strptime(f"{data['due_date']} {data['time']}", "%Y-%m-%d %H:%M")
@@ -75,12 +75,12 @@ def add_task():
 
     return jsonify({"message": "Task added successfully"}), 201
 
-# Update an existing task
+
 @app.route("/tasks/<int:task_id>", methods=["PUT"])
 def update_task(task_id):
     data = request.json
 
-    # Ensure required fields are present
+    
     required_fields = ["title", "due_date", "time", "recurrence"]
     for field in required_fields:
         if field not in data or not data[field]:
@@ -100,7 +100,7 @@ def update_task(task_id):
     return jsonify({"message": "Task updated successfully"}), 200
 
 
-# Delete a task
+
 @app.route("/tasks/<int:task_id>", methods=["DELETE"])
 def delete_task(task_id):
     conn = get_db_connection()
@@ -109,14 +109,14 @@ def delete_task(task_id):
     conn.commit()
     conn.close()
 
-    # Remove scheduled job if it exists
+    
     job_id = str(task_id)
     if scheduler.get_job(job_id):
         scheduler.remove_job(job_id)
 
     return jsonify({"message": "Task deleted"}), 200
 
-# Mark task as completed
+
 @app.route("/tasks/<int:task_id>/complete", methods=["PATCH"])
 def complete_task(task_id):
     conn = get_db_connection()
@@ -126,11 +126,11 @@ def complete_task(task_id):
     conn.close()
     return jsonify({"message": "Task marked as completed"}), 200
 
-# WebSocket connection event
+
 @socketio.on("connect")
 def handle_connect():
     print("WebSocket connected")
 
-# Run Flask with WebSocket support
+
 if __name__ == "__main__":
     socketio.run(app, debug=True)

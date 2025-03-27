@@ -12,6 +12,7 @@ import "./App.css";
 const API_URL = "http://127.0.0.1:5000/tasks";
 const SOCKET_URL = "http://127.0.0.1:5000"; 
 
+
 const App = () => {
   const [tasks, setTasks] = useState([]);
   const [selectedTask, setSelectedTask] = useState(null);
@@ -121,7 +122,7 @@ const App = () => {
     }
   };
   
-//-------------------------------------------------
+
 
 const generateRecurringEvents = () => {
   let events = [];
@@ -138,21 +139,21 @@ const generateRecurringEvents = () => {
     };
 
     if (task.recurrence === "daily") {
-      // Generate daily occurrences for the next 30 days
+      
       for (let i = 0; i < 30; i++) {
         const date = new Date(task.due_date);
         date.setDate(date.getDate() + i);
         events.push({ ...baseEvent, start: date.toISOString().split("T")[0] + "T" + task.time });
       }
     } else if (task.recurrence === "weekly") {
-      // Generate weekly occurrences for the next 8 weeks
+      
       for (let i = 0; i < 8; i++) {
         const date = new Date(task.due_date);
         date.setDate(date.getDate() + i * 7);
         events.push({ ...baseEvent, start: date.toISOString().split("T")[0] + "T" + task.time });
       }
     } else {
-      // One-time task
+      
       events.push({ ...baseEvent, start: `${task.due_date}T${task.time}` });
     }
   });
@@ -164,7 +165,7 @@ const generateRecurringEvents = () => {
 
 
 
-//--------------------------------------------------
+
 
   return (
     <div className="app-container">
@@ -177,17 +178,17 @@ const generateRecurringEvents = () => {
       eventClick={handleTaskClick}
       events={generateRecurringEvents()}
       
-      // eventContent={(eventInfo) => {
-      //   let icon = "⚫"; // Default for one-time tasks
-      //   if (eventInfo.event.extendedProps.recurrence === "daily") {
-      //     icon = "🔵";
-      //   } else if (eventInfo.event.extendedProps.recurrence === "weekly") {
-      //     icon = "🟢";
-      //   }
-      //   return {
-      //     html: `<span>${icon} ${eventInfo.event.title}</span>`,
-      //   };
-      // }}
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
     />
     </div>
 
