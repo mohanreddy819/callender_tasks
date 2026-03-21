@@ -17,6 +17,11 @@ Clone the Repository by
 git clone https://github.com/mohanreddy819/callender_tasks/tree/main.git
 cd callender_tasks
 ```
+### pre-requisites
+```bash
+  install the required dependencies before launching the app.
+```
+
 ### Setup Virtual Environment and activate it
 ```bash
   python -m venv env
